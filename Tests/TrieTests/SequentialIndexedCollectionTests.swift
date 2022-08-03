@@ -1,5 +1,5 @@
 import XCTest
-@testable import CitySearch
+@testable import Trie
 
 final class SequentialIndexedCollectionTests: XCTestCase {
     

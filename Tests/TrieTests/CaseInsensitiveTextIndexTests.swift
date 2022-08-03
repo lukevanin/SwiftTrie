@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import CitySearch
+@testable import Trie
 
 final class CaseInsensitiveTextIndexTests: XCTestCase {
     
