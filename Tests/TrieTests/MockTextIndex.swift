@@ -1,6 +1,6 @@
 import Foundation
 
-@testable import CitySearch
+@testable import Trie
 
 struct MockTextIndex<Value>: TextIndex {
     
