@@ -40,7 +40,7 @@ struct CaseInsensitiveTextIndex<Index>: TextIndex where Index: TextIndex {
     /// of case.
     ///
     private func transform<S>(_ input: S) -> String where S: StringProtocol {
-        input.localizedUppercase
+        input.uppercased()
     }
 }
 
