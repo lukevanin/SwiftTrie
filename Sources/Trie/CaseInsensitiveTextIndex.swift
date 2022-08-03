@@ -47,14 +47,3 @@ struct CaseInsensitiveTextIndex<Index>: TextIndex where Index: TextIndex {
 extension CaseInsensitiveTextIndex: Equatable where Index: Equatable {
     
 }
-
-extension CaseInsensitiveTextIndex: DataCodable where Index: DataCodable {
-    
-    func encode(encoder: DataEncoder) {
-        index.encode(encoder: encoder)
-    }
-    
-    init(decoder: DataDecoder) throws {
-        self.init(try Index(decoder: decoder))
-    }
-}
