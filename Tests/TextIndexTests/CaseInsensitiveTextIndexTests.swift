@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import Trie
+@testable import TextIndex
 
 final class CaseInsensitiveTextIndexTests: XCTestCase {
     

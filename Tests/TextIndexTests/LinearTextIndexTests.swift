@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import Trie
+@testable import TextIndex
 
 ///
 /// Tests based on the scenarios provided in the specification which prepresent the minimal acceptance

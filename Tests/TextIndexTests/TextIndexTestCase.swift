@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import Trie
+@testable import TextIndex
 
 class TextIndexTestCase<Index>: XCTestCase where Index: TextIndex, Index.Value == Int {
     

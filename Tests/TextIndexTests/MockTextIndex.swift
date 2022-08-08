@@ -1,6 +1,6 @@
 import Foundation
 
-@testable import Trie
+@testable import TextIndex
 
 struct MockTextIndex<Value>: TextIndex {
     
