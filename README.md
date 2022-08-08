@@ -1,4 +1,4 @@
-# Trie
+# TextIndex
 
 Provides a pure Swift implementation of a general purpose Trie data structure.  
 This package does not use any external dependencies.
@@ -30,9 +30,5 @@ If the prefix given is "Alb" then the only result is "Albuquerque, US"
 [TODO]
 
 ## Usage
-
-[TODO]
-
-## License
 
 [TODO]
