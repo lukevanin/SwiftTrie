@@ -9,7 +9,7 @@ import Foundation
 /// - Note: This index should not be used in real world applications. It exists as a worst case baseline
 /// comparison for more efficient implementations which should be used instead.
 ///
-struct LinearTextIndex<Value>: TextIndex where Value: Comparable {
+struct LinearTextIndex<Value>: TextIndexProtocol where Value: Comparable {
     
     struct Element {
         let key: String

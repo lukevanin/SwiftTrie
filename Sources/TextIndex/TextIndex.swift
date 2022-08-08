@@ -27,7 +27,7 @@ struct TextIndexSearchResult<Value> {
 /// - A non-empty query returns a collection containing all of the values whose key prefix matches the query.
 /// - If no keys match the given query, then an empty collection is returned.
 ///
-protocol TextIndex {
+protocol TextIndexProtocol {
     
     ///
     /// Type of the values stored in the index.
@@ -56,11 +56,11 @@ protocol TextIndex {
 ///
 /// Erases the specific type of a text index. Used to pass text index instances generically.
 ///
-struct AnyTextIndex<Value>: TextIndex {
+struct AnyTextIndex<Value>: TextIndexProtocol {
         
     private let wrapper: _TextIndex<Value>
 
-    init<Index>(_ index: Index) where Index: TextIndex, Index.Value == Value {
+    init<Index>(_ index: Index) where Index: TextIndexProtocol, Index.Value == Value {
         self.wrapper = _TextIndexWrapper(index)
     }
     
@@ -80,7 +80,7 @@ struct AnyTextIndex<Value>: TextIndex {
 ///
 /// Erases the specific type of a text index. Used to pass text index instances generically.
 ///
-private class _TextIndex<Value>: TextIndex {
+private class _TextIndex<Value>: TextIndexProtocol {
     
     fileprivate init() {
         
@@ -99,7 +99,7 @@ private class _TextIndex<Value>: TextIndex {
 ///
 ///
 ///
-final private class _TextIndexWrapper<Index>: _TextIndex<Index.Value> where Index: TextIndex {
+final private class _TextIndexWrapper<Index>: _TextIndex<Index.Value> where Index: TextIndexProtocol {
     
     private var wrapped: Index
     

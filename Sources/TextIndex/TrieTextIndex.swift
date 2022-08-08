@@ -39,7 +39,7 @@ import Foundation
 /// the key associated with the value. If multiple valiues are associated with one key, the values are returned
 /// in ascending order.
 ///
-struct TrieTextIndex<Value>: TextIndex where Value: Comparable {
+struct TrieTextIndex<Value>: TextIndexProtocol where Value: Comparable {
         
     ///
     /// A single character in a key or search prefix

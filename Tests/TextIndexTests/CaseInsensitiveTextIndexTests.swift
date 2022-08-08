@@ -4,7 +4,7 @@ import XCTest
 
 final class CaseInsensitiveTextIndexTests: XCTestCase {
     
-    struct DictionaryTextIndex: TextIndex {
+    struct DictionaryTextIndex: TextIndexProtocol {
         
         var keyValues = [(String, Int)]()
         

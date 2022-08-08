@@ -2,7 +2,7 @@ import XCTest
 
 @testable import TextIndex
 
-class TextIndexTestCase<Index>: XCTestCase where Index: TextIndex, Index.Value == Int {
+class TextIndexTestCase<Index>: XCTestCase where Index: TextIndexProtocol, Index.Value == Int {
     
     typealias KeyValue = (key: String, value: Int)
     

@@ -1,14 +1,14 @@
 import Foundation
 
 ///
-/// Performs case insensitive searches on an underlying `TextIndex`.
+/// Performs case insensitive searches on an underlying `TextIndexProtocol`.
 ///
-/// Wraps a `TextIndex` allowing queries to match keys regardless of case.
+/// Wraps a `TextIndexProtocol` allowing queries to match keys regardless of case.
 ///
 /// 1. Keys are converted to uppercase when a value is inserted.
 /// 2. Queries are converted to uppercase when a search is performed.
 ///
-struct CaseInsensitiveTextIndex<Index>: TextIndex where Index: TextIndex {
+struct CaseInsensitiveTextIndex<Index>: TextIndexProtocol where Index: TextIndexProtocol {
     
     typealias Value = Index.Value
     

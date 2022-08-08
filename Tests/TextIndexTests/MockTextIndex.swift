@@ -2,7 +2,7 @@ import Foundation
 
 @testable import TextIndex
 
-struct MockTextIndex<Value>: TextIndex {
+struct MockTextIndex<Value>: TextIndexProtocol {
     
     var mockInsert: ((_ key: String, _ value: Value) -> Void)!
     var mockSearch: ((_ prefix: String) -> [Value])!
