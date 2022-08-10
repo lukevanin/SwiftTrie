@@ -39,7 +39,7 @@ import Foundation
 /// the key associated with the value. If multiple valiues are associated with one key, the values are returned
 /// in ascending order.
 ///
-struct TrieTextIndex<Value>: TextIndexProtocol where Value: Comparable {
+public struct TrieTextIndex<Value>: TextIndexProtocol where Value: Comparable {
         
     ///
     /// A single character in a key or search prefix
@@ -255,11 +255,11 @@ struct TrieTextIndex<Value>: TextIndexProtocol where Value: Comparable {
     /// - Parameter key: Key to associated the value with.
     /// - Parameter value: Value to store for the key. The valid range is (0 ... 2^32 - 1)
     ///
-    mutating func insert(key: String, value: Value) {
+    mutating public func insert(key: String, value: Value) {
         root.insert(key: key, value: value)
     }
     
-    func search<S>(prefix: S) -> TextIndexSearchResult<Value> where S : StringProtocol {
+    public func search<S>(prefix: S) -> TextIndexSearchResult<Value> where S : StringProtocol {
         guard let node = root.search(query: prefix) else {
             return TextIndexSearchResult(
                 count: 0,

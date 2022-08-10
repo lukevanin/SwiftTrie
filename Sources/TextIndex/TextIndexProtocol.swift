@@ -6,7 +6,7 @@ import Foundation
 ///
 /// Contains the number of items returned from the result, and an iterator for accessing the result values.
 ///
-struct TextIndexSearchResult<Value> {
+public struct TextIndexSearchResult<Value> {
     let count: Int
     var iterator: AnyIterator<Value>
 }
@@ -27,7 +27,7 @@ struct TextIndexSearchResult<Value> {
 /// - A non-empty query returns a collection containing all of the values whose key prefix matches the query.
 /// - If no keys match the given query, then an empty collection is returned.
 ///
-protocol TextIndexProtocol {
+public protocol TextIndexProtocol {
     
     ///
     /// Type of the values stored in the index.
@@ -56,20 +56,20 @@ protocol TextIndexProtocol {
 ///
 /// Erases the specific type of a text index. Used to pass text index instances generically.
 ///
-struct AnyTextIndex<Value>: TextIndexProtocol {
+public struct AnyTextIndex<Value>: TextIndexProtocol {
         
     private let wrapper: _TextIndex<Value>
 
-    init<Index>(_ index: Index) where Index: TextIndexProtocol, Index.Value == Value {
+    public init<Index>(_ index: Index) where Index: TextIndexProtocol, Index.Value == Value {
         self.wrapper = _TextIndexWrapper(index)
     }
     
-    mutating func insert(key: String, value: Value) {
+    mutating public func insert(key: String, value: Value) {
         #warning("TODO: Implement copy-on-write for wrapped value")
         wrapper.insert(key: key, value: value)
     }
     
-    func search<S>(prefix: S) -> TextIndexSearchResult<Value> where S : StringProtocol {
+    public func search<S>(prefix: S) -> TextIndexSearchResult<Value> where S : StringProtocol {
         wrapper.search(prefix: prefix)
     }
 }

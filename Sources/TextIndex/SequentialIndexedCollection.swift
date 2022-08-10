@@ -9,11 +9,11 @@ import Foundation
 ///
 /// - Note: Accessing this collection randomly will result in reduced performance up to O(n).
 ///
-class SequentialIndexedCollection<Iterator, Element>: Collection where Iterator: IteratorProtocol, Iterator.Element: BinaryInteger {
+public class SequentialIndexedCollection<Iterator, Element>: Collection where Iterator: IteratorProtocol, Iterator.Element: BinaryInteger {
     
-    let startIndex: Int = 0
+    public let startIndex: Int = 0
     
-    let endIndex: Int
+    public let endIndex: Int
     
     private var currentIndex = -1
     private var cachedIndices = [Int]()
@@ -21,14 +21,14 @@ class SequentialIndexedCollection<Iterator, Element>: Collection where Iterator:
     
     private let elements: [Element]
     
-    init(count: Int, indices: Iterator, elements: [Element]) {
+    public init(count: Int, indices: Iterator, elements: [Element]) {
         self.endIndex = count
         self.indices = indices
         self.elements = elements
         self.cachedIndices = Array(repeating: 0, count: count)
     }
 
-    subscript(position: Int) -> Element {
+    public subscript(position: Int) -> Element {
         guard position >= startIndex && position < endIndex else {
             fatalError("Index \(position) out of range (\(startIndex)...\(endIndex - 1)")
         }
@@ -37,7 +37,7 @@ class SequentialIndexedCollection<Iterator, Element>: Collection where Iterator:
         return elements[index]
     }
 
-    func index(after i: Int) -> Int {
+    public func index(after i: Int) -> Int {
         i + 1
     }
     
