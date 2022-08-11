@@ -7,8 +7,8 @@ import Foundation
 /// Contains the number of items returned from the result, and an iterator for accessing the result values.
 ///
 public struct TextIndexSearchResult<Value> {
-    let count: Int
-    var iterator: AnyIterator<Value>
+    public let count: Int
+    public var iterator: AnyIterator<Value>
 }
 
 

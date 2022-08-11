@@ -1,5 +1,7 @@
 import Foundation
 
+import SwiftPack
+
 ///
 /// Performs case insensitive searches on an underlying `TextIndexProtocol`.
 ///
@@ -46,4 +48,19 @@ public struct CaseInsensitiveTextIndex<Index>: TextIndexProtocol where Index: Te
 
 extension CaseInsensitiveTextIndex: Equatable where Index: Equatable {
     
+}
+
+
+// MARK: Data Codable Conformance
+
+
+extension CaseInsensitiveTextIndex: DataCodable where Index: DataCodable {
+    
+    public func encode(encoder: DataEncoder) {
+        index.encode(encoder: encoder)
+    }
+    
+    public init(decoder: DataDecoder) throws {
+        self.init(try Index(decoder: decoder))
+    }
 }
