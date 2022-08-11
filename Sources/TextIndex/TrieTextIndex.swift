@@ -1,5 +1,7 @@
 import Foundation
 
+import SwiftPack
+
 ///
 /// A text index using a trie structure to store and retrieve values associated with keys.
 ///
@@ -44,7 +46,7 @@ public struct TrieTextIndex<Value>: TextIndexProtocol where Value: Comparable {
     ///
     /// A single character in a key or search prefix
     ///
-    public struct CodeUnit: Hashable, Comparable {
+    fileprivate struct CodeUnit: Hashable, Comparable {
         
         let scalarValue: UInt32
 
@@ -58,7 +60,7 @@ public struct TrieTextIndex<Value>: TextIndexProtocol where Value: Comparable {
             self.scalarValue = unicodeScalar.value
         }
         
-        public static func < (lhs: CodeUnit, rhs: CodeUnit) -> Bool {
+        static func < (lhs: CodeUnit, rhs: CodeUnit) -> Bool {
             lhs.scalarValue < rhs.scalarValue
         }
     }
@@ -70,7 +72,7 @@ public struct TrieTextIndex<Value>: TextIndexProtocol where Value: Comparable {
     /// - A value
     /// - Zero or more child nodes
     ///
-    public struct Node {
+    fileprivate struct Node {
         
         /// Number of values contained within the node and all of its descendants.
         private(set) var count = Int(0)
@@ -242,7 +244,8 @@ public struct TrieTextIndex<Value>: TextIndexProtocol where Value: Comparable {
     
     fileprivate var root = Node()
     
-    public init() {
+    fileprivate init(root: Node) {
+        self.root = root
     }
     
     ///
@@ -276,6 +279,12 @@ public struct TrieTextIndex<Value>: TextIndexProtocol where Value: Comparable {
     }
 }
 
+extension TrieTextIndex {
+    public init() {
+        
+    }
+}
+
 
 // MARK: Equatable conformance
 
@@ -298,22 +307,23 @@ extension TrieTextIndex.CodeUnit: Equatable {
 // MARK: Data Codable Conformance
 
 
-extension TrieTextIndex: DataCodable where Value: DataCodable {
-    public init(decoder: DataDecoder) throws {
-        self.init(
-            root: try Node(decoder: decoder)
-        )
+extension TrieTextIndex.CodeUnit: DataCodable {
+    
+    init(decoder: DataDecoder) throws {
+        let scalar = try VarUInt64(decoder: decoder)
+        #warning("TODO: Safe unwrap")
+        let unicodeScalar = UnicodeScalar(UInt32(scalar.value))!
+        self.init(unicodeScalar: unicodeScalar)
     }
     
-    public func encode(encoder: DataEncoder) {
-        root.encode(encoder: encoder)
+    func encode(encoder: DataEncoder) {
+        VarUInt64(scalarValue).encode(encoder: encoder)
     }
 }
 
-
 extension TrieTextIndex.Node: DataCodable where Value: DataCodable {
     
-    public init(decoder: DataDecoder) throws {
+    init(decoder: DataDecoder) throws {
         self = TrieTextIndex.Node(
             count: Int(try VarUInt64(decoder: decoder).value),
             values: try [Value](decoder: decoder),
@@ -322,7 +332,7 @@ extension TrieTextIndex.Node: DataCodable where Value: DataCodable {
         )
     }
     
-    public func encode(encoder: DataEncoder) {
+    func encode(encoder: DataEncoder) {
         VarUInt64(count).encode(encoder: encoder)
         values.encode(encoder: encoder)
         characters.encode(encoder: encoder)
@@ -331,16 +341,15 @@ extension TrieTextIndex.Node: DataCodable where Value: DataCodable {
 }
 
 
-extension TrieTextIndex.CodeUnit: DataCodable {
-    
+extension TrieTextIndex: DataCodable where Value: DataCodable {
     public init(decoder: DataDecoder) throws {
-        let scalar = try VarUInt64(decoder: decoder)
-        #warning("TODO: Safe unwrap")
-        let unicodeScalar = UnicodeScalar(UInt32(scalar.value))!
-        self.init(unicodeScalar: unicodeScalar)
+        self.init(
+            root: try TrieTextIndex.Node(decoder: decoder)
+        )
     }
     
     public func encode(encoder: DataEncoder) {
-        VarUInt64(scalarValue).encode(encoder: encoder)
+        root.encode(encoder: encoder)
     }
 }
+
